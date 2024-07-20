@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a05044ce8a6e34ca0ef13bc768de65, type: 3}
+  m_Name: Box
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: 
+  <Tile>k__BackingField: {fileID: 0}
+  <TileOffset>k__BackingField: {x: 0.5, y: 0.5, z: 0}
+  <PreviewSprite>k__BackingField: {fileID: -3569232777630780389, guid: 1adad697256b5974ba95e2b65c43187d, type: 3}
+  <GameObject>k__BackingField: {fileID: 4676300166735083517, guid: 9e8900e70781bd34683c337c21bbd2fe, type: 3}
+  <CanPreview>k__BackingField: 0
+  <ItemUse>k__BackingField: 2
