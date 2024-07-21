@@ -14,5 +14,8 @@ namespace Items
     {
         [field: SerializeField]
         public ItemFunctionlity ItemUse { get; private set; }
+
+        [field: SerializeField]
+        public float UseCooldown { get; private set; }
     }
 }

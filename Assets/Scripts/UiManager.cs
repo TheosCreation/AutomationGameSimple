@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Items;
+using System.Collections.Generic;
 
 public class UiManager : MonoBehaviour
 {
@@ -12,9 +13,9 @@ public class UiManager : MonoBehaviour
     [SerializeField] private GameObject mainPausePage;
     [SerializeField] private GameObject settingsPage;
 
-    [SerializeField] private Image itemImage;
-
     [SerializeField] private Texture2D mouseCursorSprite;
+
+    [SerializeField] private List<HotbarSlot> hotbarSlots;
 
 
     private void Awake()
@@ -68,10 +69,8 @@ public class UiManager : MonoBehaviour
         if (item == null)
         {
             SetDefaultCursor();
-            itemImage.sprite = null;
             return;
         }
-        itemImage.sprite = item.PreviewSprite;
 
 
         if (item is UseableItem useableItem)
@@ -101,6 +100,21 @@ public class UiManager : MonoBehaviour
         texture.SetPixels(sprite.texture.GetPixels((int)rect.x, (int)rect.y, (int)rect.width, (int)rect.height));
         texture.Apply();
         return texture;
+    }
+
+    public void UpdateHotbar(List<Item> itemsInHotBar)
+    {
+        for (int i = 0; i < hotbarSlots.Count; i++)
+        {
+            if (i < itemsInHotBar.Count)
+            {
+                hotbarSlots[i].SetItem(itemsInHotBar[i], 1);
+            }
+            else
+            {
+                hotbarSlots[i].SetItem(null, 0);
+            }
+        }
     }
 
 }

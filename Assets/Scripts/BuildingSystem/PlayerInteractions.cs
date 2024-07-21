@@ -3,6 +3,7 @@ using GameInput;
 using UnityEngine.InputSystem;
 using Items;
 using BuildingSystem;
+using ResourceSystem;
 
 public enum Rotation
 {
@@ -29,6 +30,9 @@ public class PlayerInteractions : MonoBehaviour
     private ConstructionLayer constructionLayer;
 
     [SerializeField]
+    private ResourceLayer resourceLayer;
+
+    [SerializeField]
     private PreviewLayer previewLayer;
 
     [SerializeField]
@@ -49,6 +53,9 @@ public class PlayerInteractions : MonoBehaviour
     private Vector3[] rotationDirections = { Vector3.up, Vector3.right, Vector3.down, Vector3.left };
     private int currentDirectionIndex = 1;
     private Vector3 currentRotationSelected;
+
+
+    private float useTimer = 0;
 
     private void Start()
     {
@@ -83,14 +90,24 @@ public class PlayerInteractions : MonoBehaviour
         {
             previewLayer.ClearPreview();
         }
-        
+
+        if (useTimer > 0)
+        {
+            useTimer -= Time.deltaTime;
+        }
 
         if (!isSelecting) return;
         if (gridMouseCellPos == gridCellPos) return;
         
         // We were sucessfully able to build we return
         if (TryBuild()) return;
-        if (TryUseItem()) return;
+
+        if (useTimer <= 0)
+        {
+            if (TryUseItem()) return;
+        }
+
+        if (TryDropItem()) return;
     }
 
     bool TryBuild()
@@ -111,12 +128,26 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (ActiveItem is UseableItem useableItem)
         {
+            Debug.Log("Used item");
+            useTimer = useableItem.UseCooldown;
+
+            //play swing animation
+
             if (!IsMouseWithinRange()) return false;
 
             if (useableItem.ItemUse == ItemFunctionlity.Break)
             {
-                if(constructionLayer.IsEmpty(mousePos)) return false;
-                constructionLayer.DestroyBuild(mousePos);
+                if(!constructionLayer.IsEmpty(mousePos))
+                {
+                    constructionLayer.DestroyBuild(mousePos);
+                    return true;
+                }
+                
+                if(!resourceLayer.IsEmpty(mousePos))
+                {
+                    resourceLayer.MineResource(player, mousePos);
+                    return true;
+                }
             }
             else if(useableItem.ItemUse == ItemFunctionlity.CraftingItem)
             {
@@ -125,16 +156,29 @@ public class PlayerInteractions : MonoBehaviour
                     Debug.LogError("Crafting Item doesn't have gameobject set");
                     return false;
                 }
-                GameObject itemObject = Instantiate(
-                    useableItem.GameObject, 
-                    grid.LocalToWorld(gridMouseCellPos) + useableItem.TileOffset,
-                    Quaternion.identity,
-                    parentToAttachItems.transform
-                    );
 
-                playerInventory.RemoveItem(ActiveItem);
-                ActiveItem = null;
+                DropHeldItem();
             }
+            return true;
+        }
+
+        return false;
+    }
+    
+    bool TryDropItem()
+    {
+        if (ActiveItem is Resource resourceItem)
+        {
+            if (!IsMouseWithinRange()) return false;
+
+            if(resourceItem.GameObject == null)
+            {
+                Debug.LogError("Crafting Item doesn't have gameobject set");
+                return false;
+            }
+
+            DropHeldItem();
+
             return true;
         }
 
@@ -177,6 +221,19 @@ public class PlayerInteractions : MonoBehaviour
     {
         return Vector3.Distance(gridMouseCellPos,
             gridCellPos) <= maxBuildDistance;
+    }
+
+    public void DropHeldItem()
+    {
+        GameObject itemObject = Instantiate(
+            ActiveItem.GameObject,
+            grid.LocalToWorld(gridMouseCellPos) + new Vector3(0.5f, 0.5f, 0),
+            Quaternion.identity,
+            parentToAttachItems.transform
+            );
+
+        playerInventory.RemoveItem(ActiveItem);
+        ActiveItem = null;
     }
 
     public void SetActiveItem(Item item)

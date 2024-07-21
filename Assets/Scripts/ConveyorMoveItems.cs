@@ -7,6 +7,7 @@ public class ConveyorMoveItems : MonoBehaviour
     private HashSet<CollectableItem> itemsSet = new HashSet<CollectableItem>();
     public float conveyorMoveSpeed = 1.5f;
     private TileInfo tileInfo;
+    public float centeringSpeed = 2.0f; // Speed at which items move to the center
 
     private void Start()
     {
@@ -23,29 +24,7 @@ public class ConveyorMoveItems : MonoBehaviour
                 itemsOnConveyor.Add(item);
                 itemsSet.Add(item);
 
-                Vector3 itemPosition = item.transform.position;
-                if (tileInfo.direction == Vector3.right)
-                {
-                    item.ResetVerticalVelocity();
-                    itemPosition.y = Mathf.Floor(itemPosition.y) + 0.5f;
-                }
-                else if (tileInfo.direction == Vector3.left)
-                {
-                    item.ResetVerticalVelocity();
-                    itemPosition.y = Mathf.Floor(itemPosition.y) + 0.5f;
-                }
-                else if (tileInfo.direction == Vector3.up)
-                {
-                    item.ResetHorizontalVelocity();
-                    itemPosition.x = Mathf.Floor(itemPosition.x) + 0.5f;
-                }
-                else if (tileInfo.direction == Vector3.down)
-                {
-                    item.ResetHorizontalVelocity();
-                    itemPosition.x = Mathf.Floor(itemPosition.x) + 0.5f;
-                }
-                item.transform.position = itemPosition;
-                // Disable item pickup while on conveyor
+                // Disable item pickup while on the conveyor
                 item.ableToPickup = false;
             }
         }
@@ -64,15 +43,28 @@ public class ConveyorMoveItems : MonoBehaviour
                 continue;
             }
 
-            Vector3 currentVelocity = item.rb.velocity;
+            // Gradually move the item to the center of the conveyor
+            Vector3 itemPosition = item.transform.position;
+            Vector3 targetPosition = itemPosition;
 
-            Vector3 desiredVelocity = tileInfo.direction.normalized * conveyorMoveSpeed; 
+            if (tileInfo.direction == Vector3.right || tileInfo.direction == Vector3.left)
+            {
+                targetPosition.y = Mathf.Floor(itemPosition.y) + 0.5f;
+            }
+            else if (tileInfo.direction == Vector3.up || tileInfo.direction == Vector3.down)
+            {
+                targetPosition.x = Mathf.Floor(itemPosition.x) + 0.5f;
+            }
+
+            item.transform.position = Vector3.MoveTowards(itemPosition, targetPosition, centeringSpeed * Time.deltaTime);
+
+            // Move the item along the conveyor belt
+            Vector3 currentVelocity = item.rb.velocity;
+            Vector3 desiredVelocity = tileInfo.direction.normalized * conveyorMoveSpeed;
             Vector3 velocityDifference = desiredVelocity - currentVelocity;
 
             currentVelocity += velocityDifference * Time.deltaTime;
-
             item.rb.velocity = currentVelocity;
-            return;
         }
     }
 

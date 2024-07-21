@@ -17,38 +17,43 @@ public class Inventory : MonoBehaviour
         InputManager.Instance.playerInputActions.Game.PreviousItem.performed += OnPreviousItemPerformed;
 
         playerInteractions.SetActiveItem(items[activeItemIndex]);
+        UiManager.Instance.UpdateHotbar(items);
     }
 
     private void OnNextItemPerformed(InputAction.CallbackContext ctx)
     {
         NextItem();
-    }  
-    
+    }
+
     private void OnPreviousItemPerformed(InputAction.CallbackContext ctx)
     {
         PreviousItem();
-    }    
+    }
 
     private void NextItem()
     {
         activeItemIndex = (activeItemIndex + 1) % items.Count;
         playerInteractions.SetActiveItem(items[activeItemIndex]);
+        UiManager.Instance.UpdateHotbar(items);
     }
 
     private void PreviousItem()
     {
         activeItemIndex = (activeItemIndex - 1 + items.Count) % items.Count;
         playerInteractions.SetActiveItem(items[activeItemIndex]);
+        UiManager.Instance.UpdateHotbar(items);
     }
 
     public void AddItem(Item item)
     {
         items.Add(item);
+        UiManager.Instance.UpdateHotbar(items);
     }
-    
+
     public void RemoveItem(Item item)
     {
         items.Remove(item);
         playerInteractions.SetActiveItem(null);
+        UiManager.Instance.UpdateHotbar(items);
     }
 }
