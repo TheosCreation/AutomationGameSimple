@@ -1,12 +1,23 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Items; // if you're using TextMeshPro for the quantity text
+using Items;
 
 public class HotbarSlot : MonoBehaviour
 {
     public Image itemIcon;
     public TextMeshProUGUI itemQuantity;
+    public int slotCount = 0;
+
+    private void Start()
+    {
+        GetComponent<Button>().onClick.AddListener(HotBarClicked);
+    }
+
+    private void HotBarClicked()
+    {
+        PlayerController.Instance.inventory.SelectItem(slotCount);
+    }
 
     public void SetItem(Item item, int quantity)
     {

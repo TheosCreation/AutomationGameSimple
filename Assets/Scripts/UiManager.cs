@@ -34,6 +34,7 @@ public class UiManager : MonoBehaviour
     private void Start()
     {
         SetDefaultCursor();
+        SetupHotBar();
     }
 
     public void PauseMenu(bool isPaused)
@@ -101,20 +102,35 @@ public class UiManager : MonoBehaviour
         texture.Apply();
         return texture;
     }
-
-    public void UpdateHotbar(List<Item> itemsInHotBar)
+    private void SetupHotBar()
     {
         for (int i = 0; i < hotbarSlots.Count; i++)
         {
-            if (i < itemsInHotBar.Count)
+            hotbarSlots[i].slotCount = i;
+        }
+    }
+    public void UpdateHotbar(Dictionary<Item, int> itemsInHotBar)
+    {
+        int index = 0;
+        foreach (var item in itemsInHotBar)
+        {
+            if (index < hotbarSlots.Count)
             {
-                hotbarSlots[i].SetItem(itemsInHotBar[i], 1);
+                hotbarSlots[index].SetItem(item.Key, item.Value);
+                index++;
             }
             else
             {
-                hotbarSlots[i].SetItem(null, 0);
+                break;
             }
         }
+
+        // Clear remaining slots if there are more slots than items
+        for (int i = index; i < hotbarSlots.Count; i++)
+        {
+            hotbarSlots[i].SetItem(null, 0);
+        }
     }
+
 
 }

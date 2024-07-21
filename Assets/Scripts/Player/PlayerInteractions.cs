@@ -56,6 +56,8 @@ public class PlayerInteractions : MonoBehaviour
 
 
     private float useTimer = 0;
+    private float dropTimer = 0;
+    public float dropTime = 0.2f;
 
     private void Start()
     {
@@ -95,9 +97,13 @@ public class PlayerInteractions : MonoBehaviour
         {
             useTimer -= Time.deltaTime;
         }
+        
+        if (dropTimer > 0)
+        {
+            dropTimer -= Time.deltaTime;
+        }
 
         if (!isSelecting) return;
-        if (gridMouseCellPos == gridCellPos) return;
         
         // We were sucessfully able to build we return
         if (TryBuild()) return;
@@ -107,11 +113,15 @@ public class PlayerInteractions : MonoBehaviour
             if (TryUseItem()) return;
         }
 
-        if (TryDropItem()) return;
+        if(dropTimer <= 0)
+        {
+            if (TryDropItem()) return;
+        }
     }
 
     bool TryBuild()
     {
+        if (gridMouseCellPos == gridCellPos) return false;
 
         if (ActiveItem is BuildableItem buildableItem)
         {
@@ -167,6 +177,8 @@ public class PlayerInteractions : MonoBehaviour
     
     bool TryDropItem()
     {
+        if (gridMouseCellPos == gridCellPos) return false;
+
         if (ActiveItem is Resource resourceItem)
         {
             if (!IsMouseWithinRange()) return false;
@@ -178,7 +190,7 @@ public class PlayerInteractions : MonoBehaviour
             }
 
             DropHeldItem();
-
+            dropTimer = dropTime;
             return true;
         }
 
@@ -232,8 +244,7 @@ public class PlayerInteractions : MonoBehaviour
             parentToAttachItems.transform
             );
 
-        playerInventory.RemoveItem(ActiveItem);
-        ActiveItem = null;
+        ActiveItem = playerInventory.RemoveItem(ActiveItem);
     }
 
     public void SetActiveItem(Item item)

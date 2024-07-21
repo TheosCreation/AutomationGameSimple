@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b5fcb354259b62478391e160ed24691, type: 3}
   m_Name: Wood
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Stone
+  <Name>k__BackingField: Wood
   <Tile>k__BackingField: {fileID: 11400000, guid: 83eaebe99394de54cac46fef0f6c4355, type: 2}
   <TileOffset>k__BackingField: {x: 0, y: 0, z: 0}
-  <PreviewSprite>k__BackingField: {fileID: -4624811314148355905, guid: b2dd5134f7aa18544ba58e5bed3a55ac, type: 3}
-  <GameObject>k__BackingField: {fileID: 4723470119350218039, guid: 205f4f1c993ce0545a4e80242f0c6d47, type: 3}
+  <PreviewSprite>k__BackingField: {fileID: 2081122494222022854, guid: f3f5d16df62ad4343996c63cc8396e1e, type: 3}
+  <GameObject>k__BackingField: {fileID: 9189981031478844698, guid: dbd3c565ad89c7f408df561d3b5ee30a, type: 3}
   <CanPreview>k__BackingField: 0

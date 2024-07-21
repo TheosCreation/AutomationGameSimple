@@ -15,6 +15,6 @@ MonoBehaviour:
   <Name>k__BackingField: Stone
   <Tile>k__BackingField: {fileID: 11400000, guid: b2ee54069270cf848bb63e3c8bf71f5d, type: 2}
   <TileOffset>k__BackingField: {x: 0, y: 0, z: 0}
-  <PreviewSprite>k__BackingField: {fileID: 3937710688986200930, guid: b2dd5134f7aa18544ba58e5bed3a55ac, type: 3}
+  <PreviewSprite>k__BackingField: {fileID: -6709843989647658319, guid: f3f5d16df62ad4343996c63cc8396e1e, type: 3}
   <GameObject>k__BackingField: {fileID: 4723470119350218039, guid: 205f4f1c993ce0545a4e80242f0c6d47, type: 3}
   <CanPreview>k__BackingField: 0

@@ -41,6 +41,7 @@ public class ResourceGenerationPlacer : MonoBehaviour
 
     private void PlaceResourceGroup(Vector2 startPosition, int groupSize)
     {
+        Resource resourceToPlace = GetRandomResource();
         for (int i = 0; i < groupSize; i++)
         {
             Vector2 resourcePosition;
@@ -50,7 +51,6 @@ public class ResourceGenerationPlacer : MonoBehaviour
                 resourcePosition = startPosition + offset;
             } while (!resourceLayer.IsEmpty(resourcePosition));
 
-            Resource resourceToPlace = GetRandomResource();
             resourceLayer.PlaceResource(resourcePosition, resourceToPlace, Vector2.right);
         }
     }
