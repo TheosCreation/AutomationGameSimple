@@ -169,6 +169,14 @@ public class PlayerInteractions : MonoBehaviour
 
                 DropHeldItem();
             }
+            else if(useableItem.ItemUse == ItemFunctionlity.Consume)
+            {
+                if(resourceLayer.CollectResource(player, mousePos))
+                {
+                    playerInventory.RemoveItem(ActiveItem);
+                    return true;
+                }
+            }
             return true;
         }
 

@@ -880,6 +880,8 @@ MonoBehaviour:
     quantity: 1
   - item: {fileID: 11400000, guid: 05cf1527e655a2b48b47bbe1d4dca2d1, type: 2}
     quantity: 1
+  - item: {fileID: 11400000, guid: 48b00b9e94edcd44bad53b89b8fce295, type: 2}
+    quantity: 10
   playerInteractions: {fileID: 315946543}
 --- !u!61 &315946550
 BoxCollider2D:
@@ -2129,6 +2131,7 @@ MonoBehaviour:
   resourcesToPlace:
   - {fileID: 11400000, guid: 5049b41d119e0244fadac3fd0408acd9, type: 2}
   - {fileID: 11400000, guid: d05ee148bca81684ea4f1c558a26d511, type: 2}
+  - {fileID: 11400000, guid: 7a38fe1de4b52ef4d8907c4565e1d310, type: 2}
   numberOfGroups: 10
   minGroupSize: 4
   maxGroupSize: 10

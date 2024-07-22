@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32a05044ce8a6e34ca0ef13bc768de65, type: 3}
-  m_Name: Pickaxe
+  m_Name: Bucket
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Pickaxe
+  <Name>k__BackingField: Bucket
   <Tile>k__BackingField: {fileID: 0}
   <TileOffset>k__BackingField: {x: 0, y: 0, z: 0}
-  <PreviewSprite>k__BackingField: {fileID: -2376758258213490438, guid: 1adad697256b5974ba95e2b65c43187d, type: 3}
+  <PreviewSprite>k__BackingField: {fileID: -5485516883226261105, guid: f3f5d16df62ad4343996c63cc8396e1e, type: 3}
   <GameObject>k__BackingField: {fileID: 0}
   <CanPreview>k__BackingField: 0
-  <ItemUse>k__BackingField: 0
-  <UseCooldown>k__BackingField: 0.1
+  <ItemUse>k__BackingField: 3
+  <UseCooldown>k__BackingField: 1

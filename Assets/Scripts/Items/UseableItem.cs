@@ -6,7 +6,8 @@ namespace Items
     {
         Break,
         Attack,
-        CraftingItem
+        CraftingItem,
+        Consume
     }
 
     [CreateAssetMenu(menuName = "Items/New Useable Item", fileName = "New Useable Item")]

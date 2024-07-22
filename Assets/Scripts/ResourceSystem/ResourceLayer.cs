@@ -40,12 +40,24 @@ namespace ResourceSystem
 
         public void MineResource(PlayerController playerToGive, Vector3 worldCoords)
         {
-            if(!IsEmpty(worldCoords))
+            if(IsMineable(worldCoords))
             {
                 var coords = _tilemap.WorldToCell(worldCoords);
                 Item itemToGive = resources[coords].PlaceableType;
                 playerToGive.inventory.AddItem(itemToGive);
             }
+        }
+
+        public bool CollectResource(PlayerController playerToGive, Vector3 worldCoords)
+        {
+            if(IsCollectable(worldCoords))
+            {
+                var coords = _tilemap.WorldToCell(worldCoords);
+                Item itemToGive = resources[coords].PlaceableType;
+                playerToGive.inventory.AddItem(itemToGive);
+                return true;
+            }
+            return false;
         }
 
         public void DestroyResource(Vector2 worldCoords)
@@ -61,7 +73,32 @@ namespace ResourceSystem
                 resources.Remove(coords);
             }
         }
+        public bool IsMineable(Vector3 worldCoords)
+        {
+            Resource resource = GetResourceAtWorldPosition(worldCoords);
+            if(resource == null) return false;
 
+            if (resource.Name == "Stone") return true;
+            if (resource.Name == "Wood") return true;
+            return false;
+        }
+        
+        public bool IsCollectable(Vector3 worldCoords)
+        {
+            Resource resource = GetResourceAtWorldPosition(worldCoords);
+            if(resource == null) return false;
+
+            if (resource.Name == "Water") return true;
+            return false;
+        }
+
+        public Resource GetResourceAtWorldPosition(Vector3 worldCoords)
+        {
+            if (IsEmpty(worldCoords)) return null;
+
+            var coords = _tilemap.WorldToCell(worldCoords);
+            return resources[coords].PlaceableType;
+        }
         public bool IsEmpty(Vector3 worldCoords)
         {
             var coords = _tilemap.WorldToCell(worldCoords);
